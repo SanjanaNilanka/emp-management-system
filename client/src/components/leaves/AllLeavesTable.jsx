@@ -172,14 +172,14 @@ export default function AllLeavesTable() {
               <StyledTableCell sx={{fontWeight: 700}}>To</StyledTableCell>
               <StyledTableCell sx={{fontWeight: 700}}>Reason</StyledTableCell>
               <StyledTableCell sx={{fontWeight: 700}}>Status</StyledTableCell>
-              <StyledTableCell sx={{fontWeight: 700}} align="center">Options</StyledTableCell>
+              <StyledTableCell sx={{fontWeight: 700}} align="center">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {myLeaves.map((row, index) => (
               <StyledTableRow key={row._id}>
                 <StyledTableCell>{index+1}</StyledTableCell>
-                <StyledTableCell>{getEmpIDByEmployeeID(row.employee)}</StyledTableCell>
+                <StyledTableCell>{getEmpIDByEmployeeID(row.employee)? `${getEmpIDByEmployeeID(row.employee)}`:`Employee was deleted`}</StyledTableCell>
                 <StyledTableCell>{row.category}</StyledTableCell>
                 <StyledTableCell>{row.startDate}</StyledTableCell>
                 <StyledTableCell>{row.endDate}</StyledTableCell>

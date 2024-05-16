@@ -28,11 +28,6 @@ const createEmployee = async (emp) => {
                     try {
                         const createdEmploye = await newEmployee.save();
                         if (createdEmploye) {
-                            const notification = {
-                                title: "Welcome!",
-                                description: `Welcome ${createdEmploye.fullName}! You were registered as an employee of KDU}`
-                            }
-                            setNotification(createdEmploye._id, notification);
                             return {success: true, message: "Employee is registered successfully.", employee: createdEmploye };
                         } else {
                             return {success: false, message: "Failed to create employee."};
@@ -153,7 +148,7 @@ const getAllNotifications = async (id) => {
         const notification = emp.notification;
         seenNotification.push(...notification);
         emp.notification = []
-        emp.seenNotification = notification;
+        //emp.seenNotification = notification;
         const updateEmp = await emp.save();
         if (updateEmp) {
             return { success: true, message: "All notification marked as read.", employee: updateEmp };

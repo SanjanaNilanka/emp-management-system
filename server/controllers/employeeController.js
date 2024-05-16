@@ -1,13 +1,26 @@
 const { sendEmail } = require('../services/emailService');
 const employeeService = require('../services/employeeService');
+const ObjectId = require('mongodb').ObjectId;
 
 const addEmployee = async(req, res) => {
     const newEmp = req.body;
     try {
         const data = await employeeService.createEmployee(newEmp);
         if (data.success) { 
-            res.status(200).json(data);
+            const notification = {
+                title: "Welcome!",
+                description: `Welcome ${data.employee.fullName}! You were registered as an employee of KDU}`
+            }
+            console.log(notification)
+            console.log(data.employee._id)
+            
             sendEmail(newEmp.email, newEmp.empID, newEmp.fullName, newEmp.position)
+
+            const objID = new ObjectId(data.employee._id).toHexString();
+            //console.log(`IDO: ${objID}`);
+            const sendNotify = employeeService.setNotification(objID, notification)
+            //console.log(sendNotify);
+            res.status(200).json(data);
         } else {
             res.status(400).json(data);
         }

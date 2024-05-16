@@ -48,9 +48,19 @@ export default function NotificationDisplay() {
       if (localStorage.getItem('role') === 'Admin') {
         const response = await axios.get(`http://localhost:8000/admin/get-by-user/${localStorage.getItem('userID')}`)
         try {
-          const adminNotify = await axios.get(`http://localhost:8000/admin/get-notify/${response.data.admin._id}`) 
+          const adminNotify = await axios.get(`http://localhost:8000/admin/get-notify/${response.data.admin._id}`)
           setNotifications(adminNotify.data.admin.notification);
           setSeenNotifications(adminNotify.data.admin.seenNotification);
+          
+        } catch (err) {
+
+        }
+      } else if (localStorage.getItem('role') == 'Employee') { 
+        const response = await axios.get(`http://localhost:8000/employee/get-by-user-id/${localStorage.getItem('userID')}`)
+        try {
+          const employeeNotify = await axios.get(`http://localhost:8000/employee/get-notify/${response.data.employee._id}`)
+          setNotifications(employeeNotify.data.employee.notification);
+          setSeenNotifications(employeeNotify.data.employee.seenNotification);
           
         } catch (err) {
 
@@ -75,6 +85,11 @@ export default function NotificationDisplay() {
         setNotifications(response.data.admin.notification);
         setSeenNotifications(response.data.admin.seenNotification);
         setNotifyCount(0)
+      } else if (localStorage.getItem('role') == 'Employee') {
+        const response = await axios.get(`http://localhost:8000/employee/get-by-user-id/${localStorage.getItem('userID')}`)
+        setNotifications(response.data.employee.notification);
+        setSeenNotifications(response.data.employee.seenNotification);
+        setNotifyCount(0)
       }
       
     } catch (err) { }
@@ -88,6 +103,14 @@ export default function NotificationDisplay() {
           try {
             const admin = await axios.get(`http://localhost:8000/admin/get-by-user/${localStorage.getItem('userID')}`)
             setNotifyCount(admin.data.admin.notification.length)
+            
+          } catch (err) { 
+            console.log('error', err.message);
+          }
+        } else if (localStorage.getItem('role') == 'Employee') {
+          try {
+            const employee = await axios.get(`http://localhost:8000/employee/get-by-user-id/${localStorage.getItem('userID')}`)
+            setNotifyCount(employee.data.employee.notification.length)
             
           } catch (err) { 
             console.log('error', err.message);
@@ -142,7 +165,7 @@ export default function NotificationDisplay() {
         {notifications.map((notify) => (
           <MenuItem key={notify}  onClick={handleClose} sx={{display:'flex', flexDirection:'column', alignItems:'start'}}>
             <Typography variant='h6' sx={{color:'primary.main'}}>{notify.title}</Typography>
-            <Typography sx={{fontSize: 14,textOverflow: 'ellipsis',whiteSpace: 'nowrap',overflow: 'hidden',}}>{notify.description}</Typography>
+            <Typography sx={{fontSize: 14, whiteSpace: 'pre-line'}}>{notify.description}</Typography>
           </MenuItem>
         ))}
         <Typography sx={{fontSize:12, ml:2, mt:2, mb:-1, color:'text.secondary'}}>RECENT</Typography>

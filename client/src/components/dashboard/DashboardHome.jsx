@@ -4,9 +4,16 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import AllEmployeesTable from '../employees/AllEmployeesTable';
 import { Link } from 'react-router-dom';
+import EmpSlideShow from '../dynamic/EmpSlideShow';
 
 export default function DashboardHome() {
   const currRole = localStorage.getItem('role')
+  const images = [
+    'https://kdu.ac.lk/wp-content/uploads/2024/03/new1.fw_.webp',
+    'https://kdu.ac.lk/wp-content/uploads/2024/05/Siripade_Web.webp',
+    //'https://kdu.ac.lk/wp-content/uploads/2022/10/1.webp',
+    //'https://kdu.ac.lk/wp-content/uploads/2022/10/2.webp'
+  ];
   return (
     <div>
       
@@ -47,6 +54,7 @@ export default function DashboardHome() {
         </Container>
         :
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <EmpSlideShow images={images}/>
           <Grid container spacing={3}>
             <Grid item xs={12} md={4} lg={6}>
               <Paper

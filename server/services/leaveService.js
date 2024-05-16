@@ -93,19 +93,11 @@ const getMyLeaves = async (userID) => {
 }*/
 
 const updateLeaveStatus = async (id, updatedData) => {
-    const notification = {
-        title: "Leave Request",
-        description: "",
-    }
-    if (updatedData.status == 'Approved') {
-        notification.description = "Your leave request has been approved."
-    } else if (updatedData.status == 'Rejected') {
-        notification.description = "Your leave request has been rejected."
-    }
+    
     try {
         const leave = await leaveModel.findByIdAndUpdate(id, updatedData);
         if (leave) {
-            empNotifications.setNotification(id, notification)
+            
         }
         return {
             success: true,

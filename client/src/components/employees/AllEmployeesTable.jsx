@@ -198,7 +198,7 @@ export default function AllEmployeesTable() {
               <StyledTableCell sx={{fontWeight: 700}}>NIC</StyledTableCell>
               <StyledTableCell sx={{fontWeight: 700}}>Email</StyledTableCell>
               <StyledTableCell sx={{fontWeight: 700}}>Phone</StyledTableCell>
-              <StyledTableCell sx={{fontWeight: 700}} align="center">Options</StyledTableCell>
+              <StyledTableCell sx={{fontWeight: 700}} align="center">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -211,9 +211,9 @@ export default function AllEmployeesTable() {
                 <StyledTableCell>{row.phone}</StyledTableCell>
                 <StyledTableCell align="center">
                   <ButtonGroup>
-                    <Button variant='contained' sx={{ textTransform: 'none' }} href={`/more-employee/${row._id}`}><ReadMoreIcon/>&nbsp;&nbsp;More</Button>
-                    <Button variant='contained' sx={{ textTransform: 'none' }} color='warning' href={`/edit-employee/${row._id}`}><EditIcon/>&nbsp;&nbsp;Edit</Button>
-                    <Button variant='contained' sx={{ textTransform: 'none' }} color='error'  onClick={()=>handleDeleteClick(row._id)}><DeleteIcon/>&nbsp;&nbsp;Delete</Button>
+                    <Button variant='contained' sx={{ textTransform: 'none' }} href={`/more-employee/${row._id}`}>More</Button>
+                    <Button variant='contained' sx={{ textTransform: 'none' }} color='warning' href={`/edit-employee/${row._id}`}>Edit</Button>
+                    <Button variant='contained' sx={{ textTransform: 'none' }} color='error'  onClick={()=>handleDeleteClick(row._id)}>Delete</Button>
                   </ButtonGroup>
                 </StyledTableCell>
               </StyledTableRow>
