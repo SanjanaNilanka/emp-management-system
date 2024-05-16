@@ -8,6 +8,7 @@ import { Button, CssBaseline } from '@mui/material';
 import Dashboard from './components/dashboard/Dashboard';
 import SignIn from './components/auth/SignIn';
 import { light } from '@mui/material/styles/createPalette';
+import "./App.css"
 
 export const primary = {
   50: '#F0F7FF',

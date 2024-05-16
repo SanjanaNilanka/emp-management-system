@@ -26,6 +26,7 @@ const createUser = async(email, password, role) => {
 }
 
 const authentcateUser = async(email, password) => {
+    console.log('came')
     const user = await User.findOne({ email: email });
     if (!user) {
         return {success: false, message: "Email does not exist."};

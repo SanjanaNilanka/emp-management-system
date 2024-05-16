@@ -9,7 +9,9 @@ const adminSchema = new mongoose.Schema({
     phone: { type: String, required: true },
     address: { type: String },
     dob: { type: Date },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    notification:{ type: Array, default: []},
+    seenNotification:{ type: Array, default: []}
 });
 
 module.exports =  mongoose.model('admins', adminSchema);

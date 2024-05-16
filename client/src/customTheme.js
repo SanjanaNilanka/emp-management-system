@@ -115,6 +115,7 @@ const getDesignTokens = (mode) => ({
     background: {
       default: '#fff',
       paper: gray[50],
+      search: gray[500],
       ...(mode === 'dark' && { default: gray[900], paper: gray[800] }),
     },
     text: {

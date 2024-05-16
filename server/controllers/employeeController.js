@@ -104,11 +104,47 @@ const deleteEmployee = async (req, res) => {
     }
 }
 
+const getAllNotificationsController = async (req, res) => { 
+    try {
+        const data = await employeeService.getAllNotifications(req.params.id);
+        if (data.success) { 
+            res.status(200).json(data);
+        } else {
+            res.status(400).json(data);
+        }
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: `Failed to get data, Error: ${error.message}`
+        });
+    }
+}
+
+const setNotificationsController = async (req, res) => { 
+    const id = req.params.id;
+    const notification = req.body;
+    try {
+        const data = await employeeService.setNotification(id, notification);
+        if (data.success) { 
+            res.status(200).json(data);
+        } else {
+            res.status(400).json(data);
+        }
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: `Failed to update the employee, Error: ${error.message}`
+        });
+    }
+}
+
 module.exports = {
     addEmployee,
     getEmployees,
     getEmployee,
     findEmployeeByUserID,
     updateEmployee,
-    deleteEmployee
+    deleteEmployee,
+    getAllNotificationsController,
+    setNotificationsController
 }

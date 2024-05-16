@@ -37,6 +37,9 @@ import ApplyLeave from '../leaves/ApplyLeave';
 import MarkAttendance from '../attendance/MarkAttendance';
 import CheckLeaves from '../leaves/CheckLeaves';
 import MyProfile from '../auth/MyProfile';
+import NotificationDisplay from './Notification';
+import EmployeeDetails from '../employees/EmployeeDetails';
+import ChangePassword from '../auth/ChangePassword';
 
 
 const drawerWidth = 240;
@@ -121,6 +124,7 @@ export default function Dashboard({ onThemeToggle }) {
   }
 
   const [loggedInUser, setLoggedInUser] = React.useState({role: 'admin'});
+  
   const token = localStorage.getItem('token');
   React.useEffect(() => {
     const getUserData = {
@@ -159,7 +163,7 @@ export default function Dashboard({ onThemeToggle }) {
     getLooggedInUser();
   }, [])
 
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -238,11 +242,8 @@ export default function Dashboard({ onThemeToggle }) {
                             <ModeNightRoundedIcon fontSize="small" />
                             )}
                         </IconButton>
-                        <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
+                        <NotificationDisplay/>
+                        
                         <Dropdown/>
                     </Toolbar>
                   </AppBar>
@@ -294,6 +295,8 @@ export default function Dashboard({ onThemeToggle }) {
             <Route path='/check-leaves' element={<CheckLeaves/>} />
             <Route path='/my-profile' element={<MyProfile/>} />
             <Route path='/signin' element={<SignIn/>} />
+            <Route path='/more-employee/:id' element={<EmployeeDetails/>} />
+            <Route path='/change-password' element={<ChangePassword/>} />
             <Route path='*' element={<Error404/>} />
           </Routes> 
         </Box>

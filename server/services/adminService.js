@@ -110,4 +110,41 @@ const deleteAdmin = async (id) => {
     }
 }
 
-module.exports = { createAdmin, getAdmins, getAdminByID, findByUserID, updateAdmin, deleteAdmin };
+const getAllNotifications = async (id) => {
+    try {
+        const admin = await Admin.findById(id);
+        console.log(admin)
+        const seenNotification = admin.seenNotification;
+        const notification = admin.notification;
+        seenNotification.push(...notification);
+        admin.notification = []
+        //admin.seenNotification = notification;
+        const updateAdmin = await admin.save();
+        if (updateAdmin) {
+            return { success: true, message: "All notification marked as read.", admin: updateAdmin };
+        } else {
+            return { success: false, message: "Failed to update admin." };
+        }
+    } catch (err) {
+        return { success: false, message: "Failed to get notifications." };
+    }
+}
+
+const setNotification = async (id, notification) => { 
+    try {
+        const admin = await Admin.findById(id);
+        console.log(admin);
+        const notify = admin.notification;
+        notify.push(notification);
+        const updateAdmin = await admin.save();
+        if (updateAdmin) {
+            return { success: true, message: "Notification is sent." };
+        } else {
+            return { success: false, message: "Failed to update admin." };
+        }
+    } catch (error) {
+        return { success: false, message: "Failed to set notifications: ", error: error.message };
+    }
+}
+
+module.exports = { createAdmin, getAdmins, getAdminByID, findByUserID, updateAdmin, deleteAdmin, getAllNotifications, setNotification };

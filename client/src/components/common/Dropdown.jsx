@@ -36,6 +36,11 @@ export default function Dropdown() {
     handleClose();
     navigate('/my-profile');
   }
+  
+  const handleNavigateChangePassword = () => { 
+    handleClose();
+    navigate('/change-password');
+  }
 
   const handleListKeyDown = (event) => {
     if (event.key === 'Tab') {
@@ -102,7 +107,7 @@ export default function Dropdown() {
             >
               <MenuItem onClick={handleNavigateMyProfile}><PersonIcon/>&nbsp;&nbsp;&nbsp;My Profile</MenuItem>
               <MenuItem onClick={handleClose}><SettingsIcon/>&nbsp;&nbsp;&nbsp;Setting</MenuItem>
-              <MenuItem onClick={handleClose}><LockResetIcon/>&nbsp;&nbsp;&nbsp;Change Password</MenuItem>
+              <MenuItem onClick={handleNavigateChangePassword}><LockResetIcon/>&nbsp;&nbsp;&nbsp;Change Password</MenuItem>
               <MenuItem onClick={handleLogout}><LogoutIcon/>&nbsp;&nbsp;&nbsp;Logout</MenuItem>
             </MenuList>
           </Card>

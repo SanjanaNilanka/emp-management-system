@@ -1,18 +1,62 @@
 import * as React from 'react';
 import Link from '@mui/material/Link';
-import { styled } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, {tableCellClasses} from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from '../dashboard/Title';
-import { Alert, Box, Button, ButtonGroup, Card, CircularProgress, Grid, Skeleton, Snackbar, Stack, Typography } from '@mui/material';
+import { Alert, Box, Button, ButtonGroup, Card, CircularProgress, Grid, InputBase, Skeleton, Snackbar, Stack, Typography } from '@mui/material';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
+import SearchIcon from '@mui/icons-material/Search';
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  width: '100%',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  },
+}));
+
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -39,6 +83,21 @@ export default function AllEmployeesTable() {
   const [isLoading, setIsLoading] = React.useState(true);
   const [isToast, setIsToast] = React.useState(false);
   const [toastMsg, setToastMsg] = React.useState('')
+  const [searchInput, setSearchInput] = React.useState('')
+
+  const handleSearchInput = (searchInput) => {
+    /*if (searchInput == '') {
+      getEmployees()
+    }*/
+    setSearchInput(searchInput)
+    //setEmployees(filteredEmployees)
+  }
+
+  
+  
+  const filteredEmployees = employees.filter(employee =>
+    employee.email.toLowerCase().includes(searchInput.toLowerCase()) // Filter by email
+  );
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -66,6 +125,8 @@ export default function AllEmployeesTable() {
 
     getEmployees();
   }, [])
+  
+  const employeesToRender = searchInput ? filteredEmployees : employees;
 
   const [selectedEmpId, setSelectedEmpId] = React.useState(null);
   const [isDeletePopupOpen, setDeletePopupOpen] = React.useState(false);
@@ -108,7 +169,20 @@ export default function AllEmployeesTable() {
           }}
         >
           All Employees
-          <Button href='/add-employee' sx={{textTransform:'none'}} variant='contained'><PersonAddAlt1Icon/>&nbsp;&nbsp;&nbsp;Add Employee</Button>
+          <Box sx={{display: 'flex', gap: 3}}>
+            <Search sx={{color:'text.primary', backgroundColor: 'background.search'}}>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={(e)=>{handleSearchInput(e.target.value)}}
+              />
+            </Search>
+            <Button href='/add-employee' sx={{textTransform:'none'}} variant='contained'><PersonAddAlt1Icon/>&nbsp;&nbsp;&nbsp;Add Employee</Button>
+          </Box>
+          
         </Box>
       </Title>
       {isLoading ?
@@ -128,7 +202,7 @@ export default function AllEmployeesTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {employees.map((row) => (
+            {employeesToRender.map((row) => (
               <StyledTableRow key={row._id}>
                 <StyledTableCell>{row.empID}</StyledTableCell>
                 <StyledTableCell>{row.fullName}</StyledTableCell>

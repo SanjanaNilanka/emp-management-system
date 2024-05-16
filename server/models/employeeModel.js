@@ -21,6 +21,8 @@ const employeeSchema = new mongoose.Schema({
     department: { type: String, required: true },
     position: { type: String, required: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    notification:{ type: Array, default: []},
+    seenNotification:{ type: Array, default: []}
 });
 
 module.exports = mongoose.model('employees', employeeSchema);

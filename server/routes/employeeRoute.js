@@ -9,5 +9,8 @@ router.get('/get/:id', employeeController.getEmployee);
 router.get('/get-by-user-id/:id', employeeController.findEmployeeByUserID);
 router.put('/update/:id', employeeController.updateEmployee);
 router.delete('/delete/:id', employeeController.deleteEmployee);
+router.get('/get-notify/:id', employeeController.getAllNotificationsController);
+
+router.post('/set-notify/:id', employeeController.setNotificationsController);
 
 module.exports = router;

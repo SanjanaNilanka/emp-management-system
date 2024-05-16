@@ -50,6 +50,23 @@ const getAdminByID = async (req, res) => {
     }
 }
 
+const getAdminByUserID = async (req, res) => { 
+    const id = req.params.id;
+    try {
+        const data = await adminService.findByUserID(id);
+        if (data.success) { 
+            res.status(200).json(data);
+        } else {
+            res.status(400).json(data);
+        }
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: `Failed to get data, Error: ${error.message}`
+        });
+    }
+}
+
 const deleteAdmin = async (req, res) => { 
     const id = req.params.id;
     try {
@@ -85,10 +102,50 @@ const updateAdmin = async (req, res) => {
     }
 }
 
+const getAllNotificationsController = async (req, res) => { 
+    console.log(req.params.id);
+    try {
+        const data = await adminService.getAllNotifications(req.params.id);
+        
+        console.log(data);
+        if (data.success) { 
+            res.status(200).json(data);
+        } else {
+            res.status(400).json(data);
+        }
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: `Failed to get data, Error: ${error.message}`
+        });
+    }
+}
+
+const setNotificationsController = async (req, res) => { 
+    const id = req.params.id;
+    const notification = req.body;
+    try {
+        const data = await adminService.setNotification(id, notification);
+        if (data.success) { 
+            res.status(200).json(data);
+        } else {
+            res.status(400).json(data);
+        }
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: `Failed to update the admin, Error: ${error.message}`
+        });
+    }
+}
+
 module.exports = {
     addAdmin,
     getAdmins,
     getAdminByID,
     deleteAdmin,
-    updateAdmin
+    updateAdmin,
+    getAdminByUserID,
+    getAllNotificationsController,
+    setNotificationsController
 }

@@ -21,13 +21,18 @@ const createEmployee = async (emp) => {
                         gender: emp.gender,
                         startDate: emp.startDate,
                         dob: emp.dob,
-                        department: emp.dob,
+                        department: emp.department,
                         position: emp.position,
                         user: returnedData.user._id
                     })
                     try {
                         const createdEmploye = await newEmployee.save();
                         if (createdEmploye) {
+                            const notification = {
+                                title: "Welcome!",
+                                description: `Welcome ${createdEmploye.fullName}! You were registered as an employee of KDU}`
+                            }
+                            setNotification(createdEmploye._id, notification);
                             return {success: true, message: "Employee is registered successfully.", employee: createdEmploye };
                         } else {
                             return {success: false, message: "Failed to create employee."};
@@ -107,7 +112,7 @@ const updateEmployee = async (id, updatedData) => {
         gender: updatedData.gender,
         startDate: updatedData.startDate,
         dob: updatedData.dob,
-        department: updatedData.dob,
+        department: updatedData.department,
         user: returnedData.user._id
     }
     try {
@@ -126,6 +131,12 @@ const deleteEmployee = async (id) => {
     try {
         const deletedEmployee = await Employee.findByIdAndDelete(id);
         if (deletedEmployee) {
+            try {
+                const deletedUser = await authService.userDeleteByID(deletedEmployee.user)
+            } catch (err) { 
+                console.error('Error deleting employee:', err); // Log the error if findOne() fails
+                return { success: false, message: "Failed to delete employee." };
+            }
             return { success: true, message: "Employee is deleted successfully." };
         } else {
             return { success: false, message: "Failed to delete employee." };
@@ -135,11 +146,49 @@ const deleteEmployee = async (id) => {
     }
 }
 
+const getAllNotifications = async (id) => {
+    try {
+        const emp = await Employee.findById(id);
+        const seenNotification = emp.seenNotification;
+        const notification = emp.notification;
+        seenNotification.push(...notification);
+        emp.notification = []
+        emp.seenNotification = notification;
+        const updateEmp = await emp.save();
+        if (updateEmp) {
+            return { success: true, message: "All notification marked as read.", employee: updateEmp };
+        } else {
+            return { success: false, message: "Failed to update employee." };
+        }
+    } catch (err) {
+        return { success: false, message: "Failed to get notifications." };
+    }
+}
+
+const setNotification = async (id, notification) => { 
+    try {
+        const emp = await Employee.findById(id);
+        console.log(emp);
+        const notify = emp.notification;
+        notify.push(notification);
+        const updateEmp = await emp.save();
+        if (updateEmp) {
+            return { success: true, message: "Notification is sent." };
+        } else {
+            return { success: false, message: "Failed to update employee." };
+        }
+    } catch (error) {
+        return { success: false, message: "Failed to set notifications: ", error: error.message };
+    }
+}
+
 module.exports = {
     createEmployee,
     getEmployees,
     getEmployeeByID,
     findByUserID,
     updateEmployee,
-    deleteEmployee
+    deleteEmployee,
+    getAllNotifications,
+    setNotification
 };
