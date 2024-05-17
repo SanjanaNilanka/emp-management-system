@@ -86,7 +86,10 @@ const updateEmployee = async (req, res) => {
     try {
         const id = req.params.id;
         const updatedEmp = req.body;
+        console.log("id", id);
+        console.log("updatedEmp", updatedEmp);
         const data = await employeeService.updateEmployee(id, updatedEmp);
+        console.log(data);
         if (data.success) { 
             res.status(200).json(data);
         } else {

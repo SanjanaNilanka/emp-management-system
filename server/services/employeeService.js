@@ -108,10 +108,13 @@ const updateEmployee = async (id, updatedData) => {
         startDate: updatedData.startDate,
         dob: updatedData.dob,
         department: updatedData.department,
-        user: returnedData.user._id
+        position: updatedData.position,
+        user: updatedData.user._id
     }
+    console.log(updatedEmployee);
     try {
-        const updateEmployeeData = await Employee.findByIdAndUpdate(id, updatedEmployee, { new: true });
+        const updateEmployeeData = await Employee.findByIdAndUpdate(id, updatedData, { new: true });
+        console.log(updateEmployeeData);
         if (updateEmployeeData) {
             return { success: true, message: "Employee is updated successfully.", employee: updateEmployeeData };
         } else {

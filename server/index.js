@@ -9,6 +9,7 @@ const authRoute = require('./routes/authRoute');
 const adminRoute = require('./routes/adminRoute');
 const employeeRoute = require('./routes/employeeRoute');
 const leaveRoute = require('./routes/leaveRoute');
+const attendanceRoute = require('./routes/attendenceRoute');
 
 
 
@@ -34,6 +35,7 @@ app.use('/auth', authRoute);
 app.use('/admin', adminRoute);
 app.use('/employee', employeeRoute);
 app.use('/leave', leaveRoute);
+app.use('/attendance', attendanceRoute);
 
 mongoose.connect(dbURL).then(() => {
     console.log('Database was connected');

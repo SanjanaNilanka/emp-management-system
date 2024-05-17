@@ -1,10 +1,17 @@
 const leaveService = require('../services/leaveService');
-const {setNotification} = require('../services/employeeService');
+const { setNotification } = require('../services/employeeService');
+const adminService = require('../services/adminService');
 
 const createLeave = async (req, res) => {
+    const notification = {
+        title: "Leave Request",
+        description: "New leave request, Check it and get an action",
+    }
+    console.log(req.body.status);
     try {
         const data = await leaveService.createLeave(req.body);
         if (data.success) {
+            adminService.setNotification('662f639ba96c0bcba482baba', notification);
             res.status(200).json(data);
         } else {
             res.status(400).json(data);

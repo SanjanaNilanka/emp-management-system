@@ -163,7 +163,7 @@ export default function LeaveList() {
             }}
           >
             <h1 style={{ color: '#010075', marginBottom: '-10px' }}>KDU Employee Management System</h1>
-            <h2 style={{fontWeight: 500}}>All Registered Employees</h2>
+            <h2 style={{fontWeight: 500}}>All Leaves of Employees</h2>
             <table id='leave-table' style={{ borderCollapse: 'collapse', border: '1px solid black' }}>
               <thead>
                 <tr>
@@ -180,7 +180,7 @@ export default function LeaveList() {
                 {leaves.map((row, index) => (
                   <tr key={row._id}>
                     <td style={{ border: '1px solid black', padding: '8px' }}>{index+1}</td>
-                    <td style={{ border: '1px solid black', padding: '8px' }}>{getEmpIDByEmployeeID(row.employee)}</td>
+                    <td style={{ border: '1px solid black', padding: '8px' }}>{getEmpIDByEmployeeID(row.employee)? `${getEmpIDByEmployeeID(row.employee)}`:`Employee was deleted`}</td>
                     <td style={{ border: '1px solid black', padding: '8px' }}>{row.category}</td>
                     <td style={{ border: '1px solid black', padding: '8px' }}>{row.startDate}</td>
                     <td style={{ border: '1px solid black', padding: '8px' }}>{row.endDate}</td>

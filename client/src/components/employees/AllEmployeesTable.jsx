@@ -96,7 +96,7 @@ export default function AllEmployeesTable() {
   
   
   const filteredEmployees = employees.filter(employee =>
-    employee.email.toLowerCase().includes(searchInput.toLowerCase()) // Filter by email
+    employee.empID.toLowerCase().includes(searchInput.toLowerCase()) // Filter by email
   );
 
   const handleClose = (event, reason) => {

@@ -34,7 +34,12 @@ export default function Dropdown() {
   
   const handleNavigateMyProfile = () => { 
     handleClose();
-    navigate('/my-profile');
+    if (localStorage.getItem('role') === 'Admin') {
+      navigate('/my-profile');
+    } else if (localStorage.getItem('role') === 'Employee') {
+      navigate('/my-profile-emp')
+    }
+    
   }
   
   const handleNavigateChangePassword = () => { 

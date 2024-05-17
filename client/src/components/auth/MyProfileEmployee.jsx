@@ -1,4 +1,4 @@
-import { Avatar, Chip, Container, Toolbar } from '@mui/material';
+import { Avatar, Chip, Container, Paper, Toolbar } from '@mui/material';
 import axios from 'axios';
 import React from 'react'
 
@@ -7,28 +7,26 @@ import { Alert, Box, Button, ButtonGroup, Card, CircularProgress, Grid, InputBas
 
 
 
-export default function MyProfile() {
-  const { id } = useParams();
+export default function MyProfileEmployee() {
+  const id = localStorage.getItem('userID');
   const [employee, setEmployee] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [toastMsg, setToastMsg] = React.useState('')
 
   const getEmployee = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/admin/get-by-user/${localStorage.getItem('userID')}`)
+      const response = await axios.get(`http://localhost:8000/employee/get-by-user-id/${localStorage.getItem('userID')}`)
       try {
-        setIsLoading(true)
-        console.log(localStorage.getItem('userID'))
-        console.log(response.data.admin._id)
-        const admin = await axios.get(`http://localhost:8000/admin/get/${response.data.admin._id}`);
-        console.log(response.data)
-        if (admin.data.success) {
-          setEmployee(admin.data.admin)
-          setIsLoading(false)
-        }
-      } catch (err) {
-        
+      setIsLoading(true)
+      const emp = await axios.get(`http://localhost:8000/employee/get/${response.data.employee._id}`);
+      console.log(emp.data)
+      if (emp.data.success) {
+        setEmployee(emp.data.employee)
+        setIsLoading(false)
       }
+    } catch (err) {
+      
+    }
     } catch (error) {
       
     }
@@ -42,7 +40,13 @@ export default function MyProfile() {
   }, [])
   return (
     <div>
-      <Toolbar/>
+      <Toolbar />
+      <Container sx={{mt:2, mb: -1}}>
+        <Paper sx={{px:3, py:1}}>
+          <Typography variant='h5' sx={{fontWeight:700}}>My Profile</Typography>
+        </Paper>
+      </Container>
+      
       {isLoading ?
         <Box
           sx={{
@@ -53,6 +57,7 @@ export default function MyProfile() {
             justifyContent: 'center'
           }}
         >
+          {localStorage.getItem('userID')}
           <CircularProgress/>
         </Box>
         :
@@ -63,7 +68,6 @@ export default function MyProfile() {
               <Box>
                 <ButtonGroup>
                   <Button variant='contained' color='warning'>Edit</Button>
-                  <Button variant='contained' color='error'>Delete</Button>
                 </ButtonGroup>
               </Box>
             </Box>
@@ -88,7 +92,14 @@ export default function MyProfile() {
                       <Chip label="Address" />
                       <Typography variant='body1'>{employee.address}</Typography>
                     </Box>
-                    
+                    <Box sx={{display: 'flex', alignItems: 'center', gap: 2}}>
+                      <Chip label="Marriage States" />
+                      <Typography variant='body1'>{employee.marriageStates}</Typography>
+                    </Box>
+                    <Box sx={{display: 'flex', alignItems: 'center', gap: 2}}>
+                      <Chip label="Gender" />
+                      <Typography variant='body1'>{employee.gender}</Typography>
+                    </Box>
                     <Box sx={{display: 'flex', alignItems: 'center', gap: 2}}>
                       <Chip label="DOB" />
                       <Typography variant='body1'>{employee.dob?.substring(0, 10)}</Typography>
@@ -106,7 +117,7 @@ export default function MyProfile() {
                   <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'start', alignItems: 'start', gap: 1}}>
                     <Box sx={{display: 'flex', alignItems: 'center', gap: 2}}>
                       <Chip label="Email" />
-                      <Typography variant='body1'>{employee.personalEmail}</Typography>
+                      <Typography variant='body1'>{employee.email}</Typography>
                     </Box>
                     <Box sx={{display: 'flex', alignItems: 'center', gap: 2}}>
                       <Chip label="Phone" />
@@ -115,11 +126,15 @@ export default function MyProfile() {
                     <Typography variant='h6' sx={{fontStyle: 'oblique',mb: 1}}>Official Details</Typography>
                     <Box sx={{display: 'flex', alignItems: 'center', gap: 2}}>
                       <Chip label="Department" />
-                      <Typography variant='body1'>IT Department</Typography>
+                      <Typography variant='body1'>{employee.department}</Typography>
+                    </Box>
+                    <Box sx={{display: 'flex', alignItems: 'center', gap: 2}}>
+                      <Chip label="Joined Date" />
+                      <Typography variant='body1'>{employee.startDate?.substring(0, 10)}</Typography>
                     </Box>
                     <Box sx={{display: 'flex', alignItems: 'center', gap: 2}}>
                       <Chip label="Position" />
-                      <Typography variant='body1'>System Admin</Typography>
+                      <Typography variant='body1'>{employee.position}</Typography>
                     </Box>
                     
                   </Box>
@@ -127,7 +142,48 @@ export default function MyProfile() {
                 </Box>
               </Box>
             </Box>
-            
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 8 }}>
+              <Box
+                sx={{width: "30%"}}
+              >
+                <Typography variant='h6' sx={{ fontStyle: 'oblique', mb: 1.5, mt:3 }}>Other Details</Typography>
+                <Box>
+                  <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'start', alignItems: 'start', gap: 1}}>
+                    <Box sx={{display: 'flex', alignItems: 'center', gap: 2}}>
+                      <Chip label="Work Experience" />
+                      <Typography variant='body1'>{employee.workExperience} Years</Typography>
+                    </Box>
+                  </Box>
+                  
+                </Box>
+              </Box>
+              <Box
+                sx={{width: "65%"}}
+              >
+                <Typography variant='h6' sx={{ fontStyle: 'oblique', mb: 1.5, mt:3 }}>Qualifications</Typography>
+                <Box>
+                  <table>
+                    <tr>
+                      <td style={{paddingRight: 10}}><Chip label="Qualifications" /></td>
+                      <td style={{paddingRight: 10}}><Chip label="Description" /></td>
+                      <td style={{paddingRight: 10}}><Chip label="Achived Date" /></td>
+                    </tr>
+                    {employee.qualifications.map((row) => (
+                      <tr>
+                        <td style={{paddingRight: 10, textAlign: 'center'}}>{row.qualification}</td>
+                        <td style={{paddingRight: 10, textAlign: 'center'}}>{row.description}</td>
+                        <td style={{paddingRight: 10, textAlign: 'center'}}>{row.achivedIn?.substring(0, 10)}</td>
+                      </tr>
+                    ))}
+                  </table>
+                  <Box sx={{display: 'flex',  justifyContent: 'start', alignItems: 'start', gap: 1}}>
+                    
+                    
+                  </Box>
+                  
+                </Box>
+              </Box>
+            </Box>
           </Card>
           
         </Container>

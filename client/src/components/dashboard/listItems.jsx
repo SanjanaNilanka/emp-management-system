@@ -30,7 +30,7 @@ export const mainAdminListItems = (
       </ListItemIcon>
       <ListItemText primary="Employees" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton href='/check-attendance'>
       <ListItemIcon>
         <HowToRegIcon />
       </ListItemIcon>

@@ -5,6 +5,7 @@ import Deposits from './Deposits';
 import AllEmployeesTable from '../employees/AllEmployeesTable';
 import { Link } from 'react-router-dom';
 import EmpSlideShow from '../dynamic/EmpSlideShow';
+import Count from './Count';
 
 export default function DashboardHome() {
   const currRole = localStorage.getItem('role')
@@ -27,10 +28,10 @@ export default function DashboardHome() {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 240,
+                  height: 280,
                 }}
               >
-                {/*<Chart />*/}
+                <img src={images[0]} height="100%" />
               </Paper>
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
@@ -39,10 +40,12 @@ export default function DashboardHome() {
                   p: 2,
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 240,
+                  height: 280,
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
               >
-                {/*<Deposits />*/}
+               <Count/> 
               </Paper>
             </Grid>
             <Grid item xs={12}>
@@ -59,27 +62,29 @@ export default function DashboardHome() {
             <Grid item xs={12} md={4} lg={6}>
               <Paper
                 sx={{
-                  p: 2,
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   height: 240,
                 }}
               >
-                <img src='images/attendace.png' width={200} />
-                <Box sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  textAlign: 'justify',
-                  gap: 1
-                }}>
-                  <Typography variant='h6'>
-                    Mark Attendance
-                  </Typography>
-                  <Typography variant='body1'>
-                    QR attendance marking is a method used to track attendance by scanning QR codes. In this system, each attendee is provided with a unique QR code representing their identity
-                  </Typography>
-                </Box>
+                <Button sx={{ textTransform: 'none', color: 'text.primary', p: 2 }} href='/employee-attendance'>
+                  <img src='images/attendace.png' width={200} />
+                  <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    textAlign: 'justify',
+                    gap: 1
+                  }}>
+                    <Typography variant='h6'>
+                      Mark Attendance
+                    </Typography>
+                    <Typography variant='body1'>
+                      QR attendance marking is a method used to track attendance by scanning QR codes. In this system, each attendee is provided with a unique QR code representing their identity
+                    </Typography>
+                  </Box>
+                </Button>
+                
               </Paper>
             </Grid>
             <Grid item xs={12} md={4} lg={6}>

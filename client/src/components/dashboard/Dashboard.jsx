@@ -40,6 +40,9 @@ import MyProfile from '../auth/MyProfile';
 import NotificationDisplay from './Notification';
 import EmployeeDetails from '../employees/EmployeeDetails';
 import ChangePassword from '../auth/ChangePassword';
+import EditEmployee from '../employees/EditEmployee';
+import CheckAttendance from '../attendance/CheckAttendance';
+import MyProfileEmployee from '../auth/MyProfileEmployee';
 
 
 const drawerWidth = 240;
@@ -292,11 +295,14 @@ export default function Dashboard({ onThemeToggle }) {
             <Route path='/my-leaves' element={<DisplayMyLeaves/>} />
             <Route path='/apply-leave' element={<ApplyLeave/>} />
             <Route path='/employee-attendance' element={<MarkAttendance/>} />
+            <Route path='/check-attendance' element={<CheckAttendance/>} />
             <Route path='/check-leaves' element={<CheckLeaves/>} />
             <Route path='/my-profile' element={<MyProfile/>} />
+            <Route path='/my-profile-emp' element={<MyProfileEmployee/>} />
             <Route path='/signin' element={<SignIn/>} />
             <Route path='/more-employee/:id' element={<EmployeeDetails/>} />
             <Route path='/change-password' element={<ChangePassword/>} />
+            <Route path='/edit-employee/:id' element={<EditEmployee/>} />
             <Route path='*' element={<Error404/>} />
           </Routes> 
         </Box>

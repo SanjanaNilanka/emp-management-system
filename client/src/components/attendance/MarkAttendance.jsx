@@ -8,10 +8,7 @@ export default function MarkAttendance() {
       <Toolbar/>
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={4} lg={4}>
-              <MyAttendanceQR/>
-          </Grid>
-          <Grid item xs={12} md={4} lg={8}>
+          <Grid item xs={12} md={12} lg={12}>
               <MyAttendanceQR/>
           </Grid>
         </Grid>

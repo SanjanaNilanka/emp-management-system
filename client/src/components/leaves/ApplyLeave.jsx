@@ -82,7 +82,7 @@ export default function ApplyLeave() {
       if (response.data.success) {
         setToastMsg('Leave is added successfully');
         setOpen(true);
-        navigate('/');
+        navigate('/my-leaves');
       } else {
         setToastMsg('Something went wrong, Leave was not added');
         setOpen(true);

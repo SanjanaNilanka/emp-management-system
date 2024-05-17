@@ -162,14 +162,16 @@ export default function NotificationDisplay() {
           <Typography sx={{ fontSize: 12, ml: 2, mb:-1, color:'text.secondary' }}>NEW</Typography>
         }
         
-        {notifications.map((notify) => (
+        {notifications.slice().reverse().map((notify) => (
           <MenuItem key={notify}  onClick={handleClose} sx={{display:'flex', flexDirection:'column', alignItems:'start'}}>
             <Typography variant='h6' sx={{color:'primary.main'}}>{notify.title}</Typography>
             <Typography sx={{fontSize: 14, whiteSpace: 'pre-line'}}>{notify.description}</Typography>
           </MenuItem>
         ))}
-        <Typography sx={{fontSize:12, ml:2, mt:2, mb:-1, color:'text.secondary'}}>RECENT</Typography>
-        {seenNotifications.map((notify) => (
+        {seenNotifications.length != 0 &&
+          <Typography sx={{ fontSize: 12, ml: 2, mb:-1, color:'text.secondary' }}>RECENT</Typography>
+        }
+        {seenNotifications.slice().reverse().map((notify) => (
           <MenuItem key={notify}  onClick={handleClose} sx={{display:'flex', flexDirection:'column', alignItems:'start'}}>
             <Typography variant='h6' sx={{color:'primary.main'}}>{notify.title}</Typography>
             <Typography sx={{fontSize: 14, whiteSpace: 'pre-line' }}>{notify.description}</Typography>

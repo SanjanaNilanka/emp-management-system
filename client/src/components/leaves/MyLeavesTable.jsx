@@ -37,6 +37,7 @@ export default function MyLeavesTable() {
   const [isToast, setIsToast] = React.useState(false);
   const [isDeletePopup, setIsDeletePopup] = React.useState(false);
   const [toastMsg, setToastMsg] = React.useState('')
+  const [selectedLeave, setSelectedLeave] = React.useState('')
 
   const userID = localStorage.getItem('userID');
 
@@ -46,28 +47,31 @@ export default function MyLeavesTable() {
     }
     setIsToast(false);
   };
-  React.useEffect(() => {
-    const getLooggedInUser = async () => {
-      try {
-        setIsLoading(true)
-        const response = await axios.get(`http://localhost:8000/leave/get/my/${userID}`);
-        console.log(response.data)
-        if (response.data.success) {
-          setMyLeaves(response.data.leaves)
-          setIsLoading(false)
-        }
-      } catch (err) {
-        
+  
+  const getLooggedInUser = async () => {
+    try {
+      setIsLoading(true)
+      const response = await axios.get(`http://localhost:8000/leave/get/my/${userID}`);
+      console.log(response.data)
+      if (response.data.success) {
+        setMyLeaves(response.data.leaves)
+        setIsLoading(false)
       }
-    };
+    } catch (err) {
+      
+    }
+  };
+  React.useEffect(() => {
+    
 
     getLooggedInUser();
   }, [])
 
-  const deleteEmployee = async (id) => {
-    const response = await axios.get(`http://localhost:8000/employee/delete/${id}`);
+  const deleteEmployee = async () => {
+    const response = await axios.delete(`http://localhost:8000/leave/delete/${selectedLeave}`);
     if (response.data.success) {
       setIsDeletePopup(false);
+      getLooggedInUser();
     }
   }
 
@@ -103,7 +107,7 @@ export default function MyLeavesTable() {
               <StyledTableCell sx={{fontWeight: 700}}>To</StyledTableCell>
               <StyledTableCell sx={{fontWeight: 700}}>Reason</StyledTableCell>
               <StyledTableCell sx={{fontWeight: 700}}>Status</StyledTableCell>
-              <StyledTableCell sx={{fontWeight: 700}} align="center">Options</StyledTableCell>
+              <StyledTableCell sx={{fontWeight: 700}} align="center">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -117,7 +121,16 @@ export default function MyLeavesTable() {
                 <StyledTableCell>{row.status}</StyledTableCell>
                 <StyledTableCell align="center">
                   <ButtonGroup>
-                    <Button variant='text' sx={{ textTransform: 'none' }} color='error'  onClick={handleDeletePopup}>Cancel</Button>
+                    {row.status === 'Approved' &&
+                      <Button variant='outlined' disabled sx={{ textTransform: 'none' }} color='error' onClick={() => { setSelectedLeave(row._id); handleDeletePopup(); }}>Approved</Button>
+                    }
+                    {row.status === 'Rejected' &&
+                      <Button variant='contained' sx={{ textTransform: 'none' }} color='success' href='/apply-leave'>Apply Again</Button>
+                    }
+                    {row.status === 'Pending' &&
+                      <Button variant='contained' sx={{ textTransform: 'none' }} color='error' onClick={() => { setSelectedLeave(row._id); handleDeletePopup(); }}>Cancel</Button>
+                    }
+                    
                   </ButtonGroup>
                 </StyledTableCell>
               </StyledTableRow>
