@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import QRCodeGenerator from './QRCodeGenerator'
 import axios from 'axios';
 import { Alert, Box, Button, Paper, Snackbar, TextField, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export default function MyAttendanceQR() {
   
@@ -96,6 +97,8 @@ export default function MyAttendanceQR() {
     setPin(e.target.value) ;
   };
 
+  const navigate = useNavigate()
+
   const handleSubmit = async (e) => { 
     e.preventDefault();
 
@@ -108,9 +111,11 @@ export default function MyAttendanceQR() {
         });
         if (response.data.success) {
           setPin('');
-          employeeMarkedAttendance = isEmployeeMarkedAttendance();
           setToastMsg('Your attendence has been marked for today');
           setOpen(true);
+          setTimeout(() => {
+            navigate('/');
+          },[2000])
         }
       } catch (err) {
         console.log(err);
