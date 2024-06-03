@@ -122,7 +122,7 @@ export default function LeaveList() {
         <ListItemIcon>
             <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary="Employee List" />
+        <ListItemText primary="Leave List" />
       </ListItemButton>
       <Modal
         open={open}

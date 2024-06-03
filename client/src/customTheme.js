@@ -116,7 +116,8 @@ const getDesignTokens = (mode) => ({
       default: '#fff',
       paper: gray[50],
       search: gray[500],
-      ...(mode === 'dark' && { default: gray[900], paper: gray[800] }),
+      select: '#464646',
+      ...(mode === 'dark' && { default: gray[900], paper: gray[800], select: '#464646' }),
     },
     text: {
       primary: gray[800],
@@ -134,6 +135,12 @@ const getDesignTokens = (mode) => ({
       secondary: secondary[500],
       background: gray[100],
       ...(mode === 'dark' && { primary: brand[500], secondary: secondary[500], background: "#1f1f1f" }),
+    },
+    select: {
+      primary: brand[500],
+      secondary: secondary[500],
+      background: gray[100],
+      ...(mode === 'dark' && { primary: brand[500], secondary: secondary[500], background: "#464646" }),
     }
   },
   typography: {

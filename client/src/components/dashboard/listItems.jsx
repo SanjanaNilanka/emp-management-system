@@ -15,6 +15,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EmployeeList from '../pdf/EmployeeList';
 import AddIcCallIcon from '@mui/icons-material/AddIcCall';
 import LeaveList from '../pdf/LeaveList';
+import AttendanceList from '../pdf/AttendanceList';
 
 export const mainAdminListItems = (
   <React.Fragment>
@@ -80,12 +81,7 @@ export const secondaryListItems = (
       Saved reports
     </ListSubheader>
     <EmployeeList/>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Attendence List" />
-    </ListItemButton>
+    <AttendanceList/>
     <LeaveList/>
   </React.Fragment>
 );

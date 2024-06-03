@@ -1,4 +1,4 @@
-import { Box, TextField, Grid, Button, Toolbar, Container, Paper, InputAdornment, MenuItem, Snackbar, Alert } from '@mui/material'
+import { Box, TextField, Grid, Button, Toolbar, Container, Paper, InputAdornment, MenuItem, Snackbar, Alert, useTheme } from '@mui/material'
 import React, { useState } from 'react'
 import axios from 'axios';
 import CloseIcon from '@mui/icons-material/Close';
@@ -41,6 +41,8 @@ export default function EditEmployee() {
     setQualifications(newInputs); 
   };
   
+  const theme = useTheme();
+    
   const navigate = useNavigate();
   
   const [toastMsg, setToastMsg] = React.useState('')
@@ -320,7 +322,7 @@ export default function EditEmployee() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item sx={{width: '50%'}}>
+                        <Grid item sx={{width: '50%', position:'relative'}}>
                             <TextField
                                 margin="normal"
                                 required
@@ -329,7 +331,7 @@ export default function EditEmployee() {
                                 label="Marriage States"
                                 id="marriageStates"
                                 select
-                                defaultValue={employee.marriageStates == 'married'? 'married':'unmarried'}
+                                defaultValue="choose_one"
                                 variant="filled"
                                 onChange={handleChange}
                             >
@@ -339,10 +341,23 @@ export default function EditEmployee() {
                                     </MenuItem>
                                 ))}
                             </TextField>
+                            <Box 
+                                sx={{
+                                    position:'absolute',
+                                    top: '40px',
+                                    left:'0',
+                                    backgroundColor:'background.select',
+                                    color:'text.primary',
+                                    pl: '12px',
+                                    width:'20%'
+                                }}
+                            >
+                                {employee.marriageStates==="married"? "Married" : "Unmarried"}
+                            </Box>
                         </Grid>
                     </Grid>
                     <Grid container sx={{display:'flex', alignItems:'center', justifyContent: 'space-between', gap: 2}}>
-                        <Grid item xs sx={{width: '50%'}}>
+                        <Grid item xs sx={{width: '50%', position: 'relative'}}>
                             <TextField
                                 margin="normal"
                                 required
@@ -351,7 +366,7 @@ export default function EditEmployee() {
                                 label="Gender"
                                 id="gender"
                                 select
-                                defaultValue={employee.gender == 'male'? 'male':'female'}
+                                defaultValue="choose_one"
                                 onChange={handleChange}
                                 variant="filled"
                                 
@@ -362,7 +377,20 @@ export default function EditEmployee() {
                                     </MenuItem>
                                 ))}
                             </TextField>
-                            <input value={employee.gender}/>
+                            <Box 
+                                sx={{
+                                    position:'absolute',
+                                    top: '40px',
+                                    left:'0',
+                                    backgroundColor:'background.select',
+                                    color:'text.primary',
+                                    pl: '12px',
+                                    width:'20%'
+                                }}
+                            >
+                                {employee.gender==="male"? "Male" : "Female"}
+                            </Box>
+                            
                         </Grid>
                         <Grid item sx={{width: '50%'}}>
                             <TextField
@@ -384,7 +412,7 @@ export default function EditEmployee() {
                         </Grid>
                     </Grid>
                     <Grid container sx={{display:'flex', alignItems:'center', justifyContent: 'space-between', gap: 2}}>
-                        <Grid item xs sx={{width: '50%'}}>
+                        <Grid item xs sx={{width: '50%', position:'relative'}}>
                             <TextField
                                 margin="normal"
                                 required
@@ -394,7 +422,7 @@ export default function EditEmployee() {
                                 id="department"
                                 select
                                 variant="filled"
-                                defaultValue={employee.department}
+                                defaultValue="choose_one"
                                 onChange={handleChange}
                             >
                                 {departments.map((option) => (
@@ -403,6 +431,19 @@ export default function EditEmployee() {
                                     </MenuItem>
                                 ))}
                             </TextField>
+                            <Box 
+                                sx={{
+                                    position:'absolute',
+                                    top: '40px',
+                                    left:'0',
+                                    backgroundColor:'background.select',
+                                    color:'text.primary',
+                                    pl: '12px',
+                                    width:'20%'
+                                }}
+                            >
+                                {employee.department}
+                            </Box>
                         </Grid>
                         <Grid item sx={{width: '50%'}}>
                             <TextField

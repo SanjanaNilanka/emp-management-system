@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import { ThemeProvider, useTheme, createTheme } from '@mui/material/styles';
 import { amber, deepOrange, grey } from '@mui/material/colors';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Button, CssBaseline } from '@mui/material';
+import { Button, CssBaseline, selectClasses } from '@mui/material';
 import Dashboard from './components/dashboard/Dashboard';
 import SignIn from './components/auth/SignIn';
 import { light } from '@mui/material/styles/createPalette';
@@ -66,7 +66,9 @@ const getDesignTokens = (mode) => ({
         default: '#1f1f1f',
         paper: '#1f1f1f',
         table: '#1f1f1f',
-        popup: '#1f1f1f'
+        popup: '#1f1f1f',
+        select: '#3d3d3d',
+        selectFocused: '#464646',
       },
     }),
     ...(mode === 'light' && {
@@ -74,6 +76,8 @@ const getDesignTokens = (mode) => ({
         default: '#fff',
         table: '#f8f8f8',
         popup: '#f8f8f8',
+        select: '#f0f0f0',
+        selectFocused: '#e9e9e9'
       },
     }),
     text: {
