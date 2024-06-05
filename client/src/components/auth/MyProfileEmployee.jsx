@@ -67,7 +67,7 @@ export default function MyProfileEmployee() {
               <Typography variant='h4'>{employee.fullName} | {employee.empID}</Typography>
               <Box>
                 <ButtonGroup>
-                  <Button variant='contained' color='warning'>Edit</Button>
+                  <Button variant='contained' color='warning' href={`/edit-self/${employee._id}`}>Edit</Button>
                 </ButtonGroup>
               </Box>
             </Box>

@@ -12,6 +12,36 @@ export default function EmployeeDetails() {
   const [employee, setEmployee] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [toastMsg, setToastMsg] = React.useState('')
+  const [isToast, setIsToast] = React.useState(false);
+  const [selectedEmpId, setSelectedEmpId] = React.useState(null);
+  const [isDeletePopupOpen, setDeletePopupOpen] = React.useState(false);
+
+  const handleDeleteClick = (empId) => {
+    setSelectedEmpId(empId);
+    setDeletePopupOpen(true);
+  };
+
+  const handleDelete = () => {
+    deleteEmployee()
+    console.log('Delete employee with ID:', selectedEmpId);
+    setDeletePopupOpen(false);
+  };
+
+  const deleteEmployee = async () => {
+    try {
+      const response = await axios.delete(`http://localhost:8000/employee/delete/${selectedEmpId}`);
+      if (response.data.success) {
+        setIsToast(true);
+        setToastMsg('Employee is deleted with ID:', selectedEmpId);
+        window.location.href = '/view-employees'
+      }
+    }catch (error) {
+        console.error('Error fetching employee ID:', error);
+        setIsToast(true);
+        setToastMsg('Unkown error occured', error);
+    }
+    
+  }
 
   const getEmployee = async () => {
     try {
@@ -54,8 +84,8 @@ export default function EmployeeDetails() {
               <Typography variant='h4'>{employee.fullName} | {employee.empID}</Typography>
               <Box>
                 <ButtonGroup>
-                  <Button variant='contained' color='warning'>Edit</Button>
-                  <Button variant='contained' color='error'>Delete</Button>
+                  <Button variant='contained' color='warning' href={`/edit-employee/${employee._id}`}>Edit</Button>
+                  <Button variant='contained' color='error' onClick={()=>handleDeleteClick(employee._id)}>Delete</Button>
                 </ButtonGroup>
               </Box>
             </Box>
@@ -173,7 +203,33 @@ export default function EmployeeDetails() {
               </Box>
             </Box>
           </Card>
-          
+          <Snackbar
+            open={isDeletePopupOpen}
+            onClose={()=>{setDeletePopupOpen(false)}}
+            anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+            }}
+          >
+            <Card
+              sx={{
+                backgroundColor: 'background.popup',
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: 3,
+                borderRadius: 4,
+              }}
+            >
+              <Typography variant='h6'>Do You Want to Delete this Employee?</Typography>
+              <Grid>
+                <Button onClick={handleDelete}>Yes</Button>
+                <Button color='error' onClick={()=>{setDeletePopupOpen(false)}}>No</Button>
+              </Grid>
+            </Card>
+          </Snackbar>
         </Container>
       }
     </div>

@@ -69,6 +69,7 @@ const getDesignTokens = (mode) => ({
         popup: '#1f1f1f',
         select: '#3d3d3d',
         selectFocused: '#464646',
+        selectDisabled: '#444444'
       },
     }),
     ...(mode === 'light' && {
@@ -77,7 +78,8 @@ const getDesignTokens = (mode) => ({
         table: '#f8f8f8',
         popup: '#f8f8f8',
         select: '#f0f0f0',
-        selectFocused: '#e9e9e9'
+        selectFocused: '#e9e9e9',
+        selectDisabled: '#e0e0e0'
       },
     }),
     text: {

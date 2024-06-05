@@ -44,6 +44,7 @@ import EditEmployee from '../employees/EditEmployee';
 import CheckAttendance from '../attendance/CheckAttendance';
 import MyProfileEmployee from '../auth/MyProfileEmployee';
 import AttendanceSpecificDate from '../attendance/AttendanceSpecificDate';
+import SelfEdit from '../employees/SelfEdit';
 
 
 const drawerWidth = 240;
@@ -304,6 +305,7 @@ export default function Dashboard({ onThemeToggle }) {
             <Route path='/more-employee/:id' element={<EmployeeDetails/>} />
             <Route path='/change-password' element={<ChangePassword/>} />
             <Route path='/edit-employee/:id' element={<EditEmployee/>} />
+            <Route path='/edit-self/:id' element={<SelfEdit/>} />
             <Route path='/specifi-attendance' element={<AttendanceSpecificDate/>} />
             <Route path='*' element={<Error404/>} />
           </Routes> 
